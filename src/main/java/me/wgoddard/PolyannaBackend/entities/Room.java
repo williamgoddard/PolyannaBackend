@@ -14,14 +14,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table
-public class Area {
+public class Room {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(unique=true)
-    private Long server;
+    private String name;
 
 }
