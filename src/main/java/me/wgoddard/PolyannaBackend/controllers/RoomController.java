@@ -19,24 +19,20 @@ public class RoomController {
     }
 
     @PostMapping(path = "create")
-    public void create(@RequestBody Room room) {
-        service.save(room);
-    }
+    public Room create(@RequestBody Room room) { return service.save(room); }
 
     @GetMapping(path = "readAll")
-    public List<Room> readAll() {
-        return service.getAll();
-    }
+    public List<Room> readAll() { return service.getAll(); }
 
-    @GetMapping(path = "readByName")
-    public Room readByName(@RequestBody String name) {
+    @GetMapping(path = "read/{name}")
+    public Room readByName(@PathVariable String name) {
         return service.getByName(name);
     }
 
     @PutMapping(path = "update")
-    public void update(@RequestBody Room room) { service.save(room); }
+    public Room update(@RequestBody Room room) { return service.save(room); }
 
-    @DeleteMapping(path="delete")
-    public void delete(@RequestBody String name) { service.deleteByName(name); }
+    @DeleteMapping(path="delete/{name}")
+    public String delete(@PathVariable String name) { return service.deleteByName(name); }
 
 }

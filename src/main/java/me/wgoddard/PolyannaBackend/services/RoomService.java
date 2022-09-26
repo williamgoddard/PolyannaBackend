@@ -20,12 +20,13 @@ public class RoomService {
         this.repo = repo;
     }
 
-    public void save(Room room) {
-        repo.saveAndFlush(room);
+    public Room save(Room room) {
+        return repo.saveAndFlush(room);
     }
 
-    public void deleteByName(String name) {
+    public String deleteByName(String name) {
         repo.deleteByName(name);
+        return "Room deleted";
     }
 
     public Room getByName(String name) {
