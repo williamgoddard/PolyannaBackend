@@ -21,10 +21,11 @@ public class ServerService {
         return repo.findAll();
     }
 
-    public void save(Server server) {
+    public String create(Server server) {
         if (repo.findByDiscordId(server.getDiscordId()).isPresent()) {
-            throw new IllegalStateException("Server already registered");
+            return "That server already exists.";
         }
         repo.saveAndFlush(server);
+        return ("New server registered: " + server.getDiscordId());
     }
 }

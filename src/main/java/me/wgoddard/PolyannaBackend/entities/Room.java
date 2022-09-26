@@ -1,6 +1,5 @@
 package me.wgoddard.PolyannaBackend.entities;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +18,10 @@ public class Room {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "server_id", nullable = false)
+    private Server server;
 
     private String name;
 

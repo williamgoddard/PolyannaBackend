@@ -1,6 +1,5 @@
 package me.wgoddard.PolyannaBackend.repos;
 
-import me.wgoddard.PolyannaBackend.entities.Room;
 import me.wgoddard.PolyannaBackend.entities.Server;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -19,8 +19,6 @@ public class ServerController {
     }
 
     @PostMapping(path = "/create")
-    public void create(@RequestBody Server server) {
-        service.save(server);
-    }
+    public String create(@RequestBody Server server) { return service.create(server); }
 
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,5 +24,8 @@ public class Server {
     @NotNull
     @Column(unique=true)
     private Long discordId;
+
+    @OneToMany(mappedBy = "server")
+    Set<Room> rooms;
 
 }
