@@ -23,6 +23,6 @@ public class Server {
 
     @NotNull
     @Column(unique=true)
-    private Long server;
+    private Long discordId;
 
 }

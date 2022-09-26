@@ -21,10 +21,10 @@ public class ServerService {
         return repo.findAll();
     }
 
-    public void addNewServer(Server server) {
-//        if (repo.findStudentByEmail(server.getEmail()).isPresent()) {
-//            throw new IllegalStateException("Email taken");
-//        }
-        repo.save(server);
+    public void save(Server server) {
+        if (repo.findByDiscordId(server.getDiscordId()).isPresent()) {
+            throw new IllegalStateException("Server already registered");
+        }
+        repo.saveAndFlush(server);
     }
 }
