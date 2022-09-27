@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ServerService {
@@ -28,4 +29,13 @@ public class ServerService {
         repo.saveAndFlush(server);
         return ("New server registered: " + server.getDiscordId());
     }
+
+    public Server read(Long discordId) {
+        Optional<Server> server = repo.findByDiscordId(discordId);
+        if (server.isPresent()) {
+            return server.get();
+        }
+        return null;
+    }
+
 }

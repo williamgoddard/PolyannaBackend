@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/server")
+@RequestMapping(path = "api/server")
 public class ServerController {
 
     private final ServerService service;
@@ -18,7 +18,7 @@ public class ServerController {
         this.service = service;
     }
 
-    @PostMapping(path = "/create")
+    @PostMapping
     public String create(@RequestBody Server server) { return service.create(server); }
 
 }

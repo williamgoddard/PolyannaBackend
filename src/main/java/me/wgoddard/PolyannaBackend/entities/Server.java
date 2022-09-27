@@ -25,7 +25,7 @@ public class Server {
     @Column(unique=true)
     private Long discordId;
 
-    @OneToMany(mappedBy = "server")
-    Set<Room> rooms;
+    //@OneToMany(mappedBy = "server")
+    //Set<Room> rooms;
 
 }
