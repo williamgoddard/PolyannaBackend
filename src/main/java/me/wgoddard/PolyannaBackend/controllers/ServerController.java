@@ -3,6 +3,7 @@ package me.wgoddard.PolyannaBackend.controllers;
 import me.wgoddard.PolyannaBackend.entities.Server;
 import me.wgoddard.PolyannaBackend.services.ServerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class ServerController {
     }
 
     @PostMapping
-    public String create(@RequestBody Server server) { return service.create(server); }
+    public ResponseEntity<String> create(@RequestBody Server server) {
+        return service.create(server);
+    }
 
 }

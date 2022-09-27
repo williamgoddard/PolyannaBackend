@@ -3,6 +3,8 @@ package me.wgoddard.PolyannaBackend.services;
 import me.wgoddard.PolyannaBackend.entities.Server;
 import me.wgoddard.PolyannaBackend.repos.ServerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,12 +24,12 @@ public class ServerService {
         return repo.findAll();
     }
 
-    public String create(Server server) {
+    public ResponseEntity<String> create(Server server) {
         if (repo.findByDiscordId(server.getDiscordId()).isPresent()) {
-            return "That server already exists.";
+            return new ResponseEntity<>("That server is already registered.", HttpStatus.BAD_REQUEST);
         }
         repo.saveAndFlush(server);
-        return ("New server registered: " + server.getDiscordId());
+        return new ResponseEntity<>("New server registered: " + server.getDiscordId(), HttpStatus.OK);
     }
 
     public Server read(Long discordId) {
