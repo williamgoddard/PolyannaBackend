@@ -23,6 +23,10 @@ public class Room {
     @JoinColumn(name = "server_id", nullable = false)
     private Server server;
 
+    @OneToOne
+    @JoinColumn(name = "inventory_id", nullable = false)
+    private Inventory inventory;
+
     private String name;
 
 }

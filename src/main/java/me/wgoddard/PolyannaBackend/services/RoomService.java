@@ -1,7 +1,7 @@
 package me.wgoddard.PolyannaBackend.services;
 
+import me.wgoddard.PolyannaBackend.entities.Inventory;
 import me.wgoddard.PolyannaBackend.entities.Room;
-import me.wgoddard.PolyannaBackend.entities.Server;
 import me.wgoddard.PolyannaBackend.repos.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,15 +16,18 @@ public class RoomService {
     private final RoomRepository repo;
 
     private final ServerService serverService;
+    private final InventoryService inventoryService;
 
     @Autowired
-    public RoomService(RoomRepository repo, ServerService serverService) {
+    public RoomService(RoomRepository repo, ServerService serverService, InventoryService inventoryService) {
         this.repo = repo;
         this.serverService = serverService;
+        this.inventoryService = inventoryService;
     }
 
     public ResponseEntity<String> save(Room room, Long guildId) {
         room.setServer(serverService.read(guildId));
+        room.setInventory(inventoryService.create(guildId).getBody());
         repo.saveAndFlush(room);
         return new ResponseEntity<>("The room was saved successfully", HttpStatus.OK);
     }

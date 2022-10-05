@@ -28,6 +28,12 @@ public class InventoryService {
         return new ResponseEntity<>("The inventory was saved successfully", HttpStatus.OK);
     }
 
+    public ResponseEntity<Inventory> create(Long guildId) {
+        Inventory inventory = new Inventory();
+        this.save(inventory, guildId);
+        return new ResponseEntity<>(inventory, HttpStatus.OK);
+    }
+
     public ResponseEntity<Inventory> read(Long guildId, Long id) {
         Optional<Inventory> inventory = repo.findByIdAndServerDiscordId(id, guildId);
         if (inventory.isPresent()) {
