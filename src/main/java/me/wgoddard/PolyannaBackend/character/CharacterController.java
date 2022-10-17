@@ -1,7 +1,5 @@
-package me.wgoddard.PolyannaBackend.controllers;
+package me.wgoddard.PolyannaBackend.character;
 
-import me.wgoddard.PolyannaBackend.entities.Character;
-import me.wgoddard.PolyannaBackend.services.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

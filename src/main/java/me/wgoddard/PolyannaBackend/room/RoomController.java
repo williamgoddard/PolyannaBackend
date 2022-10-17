@@ -1,7 +1,5 @@
-package me.wgoddard.PolyannaBackend.controllers;
+package me.wgoddard.PolyannaBackend.room;
 
-import me.wgoddard.PolyannaBackend.entities.Room;
-import me.wgoddard.PolyannaBackend.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

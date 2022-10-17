@@ -1,6 +1,5 @@
-package me.wgoddard.PolyannaBackend.repos;
+package me.wgoddard.PolyannaBackend.inventory;
 
-import me.wgoddard.PolyannaBackend.entities.Inventory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

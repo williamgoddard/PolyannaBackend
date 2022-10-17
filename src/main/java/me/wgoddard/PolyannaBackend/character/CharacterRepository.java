@@ -1,6 +1,5 @@
-package me.wgoddard.PolyannaBackend.repos;
+package me.wgoddard.PolyannaBackend.character;
 
-import me.wgoddard.PolyannaBackend.entities.Character;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

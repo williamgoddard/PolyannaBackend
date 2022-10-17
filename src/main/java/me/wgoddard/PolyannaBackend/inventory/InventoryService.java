@@ -1,7 +1,6 @@
-package me.wgoddard.PolyannaBackend.services;
+package me.wgoddard.PolyannaBackend.inventory;
 
-import me.wgoddard.PolyannaBackend.entities.Inventory;
-import me.wgoddard.PolyannaBackend.repos.InventoryRepository;
+import me.wgoddard.PolyannaBackend.server.ServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
