@@ -1,6 +1,5 @@
 package me.wgoddard.PolyannaBackend.services;
 
-import me.wgoddard.PolyannaBackend.entities.Inventory;
 import me.wgoddard.PolyannaBackend.entities.Room;
 import me.wgoddard.PolyannaBackend.repos.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
