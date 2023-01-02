@@ -13,7 +13,6 @@ import java.util.List;
 public class RoomService {
 
     private final RoomRepository repo;
-
     private final ServerService serverService;
     private final InventoryService inventoryService;
 
