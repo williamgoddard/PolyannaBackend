@@ -1,5 +1,6 @@
 package me.wgoddard.PolyannaBackend.server;
 
+import me.wgoddard.PolyannaBackend.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,24 +19,25 @@ public class ServerService {
         this.repo = repo;
     }
 
-    public List<Server> getServers() {
-        return repo.findAll();
-    }
-
-    public ResponseEntity<String> create(Server server) {
+    public Response<Server> create(Server server) {
         if (repo.findByDiscordId(server.getDiscordId()).isPresent()) {
-            return new ResponseEntity<>("That server is already registered.", HttpStatus.BAD_REQUEST);
+            return new Response<>(null, "That server is already registered.", false);
         }
-        repo.saveAndFlush(server);
-        return new ResponseEntity<>("New server registered: " + server.getDiscordId(), HttpStatus.OK);
+        server = repo.saveAndFlush(server);
+        return new Response<>(server, "New server registered: " + server.getDiscordId(), true);
     }
 
-    public Server read(Long discordId) {
+    public Response<Server> read(Long discordId) {
         Optional<Server> server = repo.findByDiscordId(discordId);
         if (server.isPresent()) {
-            return server.get();
+            return new Response<>(server.get(), "Server returned successfully.", true);
         }
-        return null;
+        return new Response<>(null, "Server could not be found: " + discordId, false);
+    }
+
+    public Response<List<Server>> readAll() {
+        List<Server> servers = repo.findAll();
+        return new Response<>(servers, "List of servers returned successfully.", true);
     }
 
 }
