@@ -1,10 +1,10 @@
 package me.wgoddard.PolyannaBackend.room;
 
+import me.wgoddard.PolyannaBackend.response.Response;
+import me.wgoddard.PolyannaBackend.server.Server;
 import me.wgoddard.PolyannaBackend.server.ServerService;
 import me.wgoddard.PolyannaBackend.inventory.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,41 +23,64 @@ public class RoomService {
         this.inventoryService = inventoryService;
     }
 
-    public ResponseEntity<String> save(Room room, Long guildId) {
-        room.setServer(serverService.read(guildId));
+    public Response<Room> save(Room room, Long guildId) {
+        Response<Server> server = serverService.read(guildId);
+        if (!server.success) {
+            return new Response<>(null, server.response, false);
+        }
+        room.setServer(server.data);
         room.setInventory(inventoryService.create(guildId).getBody());
         repo.saveAndFlush(room);
-        return new ResponseEntity<>("The room was saved successfully", HttpStatus.OK);
+        return new Response(room, "Room saved successfully.", true);
     }
 
-    public ResponseEntity<List<Room>> readAll(Long guildId) {
-        return new ResponseEntity<>(repo.findByServerDiscordId(guildId), HttpStatus.OK);
-    }
-
-    public ResponseEntity<Room> read(Long guildId, String name, int num) {
-        List<Room> rooms = repo.findByServerDiscordIdAndName(guildId, name);
-        if (rooms.size() >= num) {
-            return new ResponseEntity<>(rooms.get(num-1),HttpStatus.OK);
+    public Response<Room> read(Long guildId, String name, int num) {
+        Response<Server> server = serverService.read(guildId);
+        if (!server.success) {
+            return new Response<>(null, server.response, false);
         }
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        List<Room> rooms = repo.findByServerDiscordIdAndName(guildId, name);
+        if (num >= 1 && rooms.size() >= num) {
+            return new Response<>(rooms.get(num-1), "Room returned successfully.", true);
+        } else if (rooms.size() == 0) {
+            return new Response<>(null, "Room `" + name + "` could not be found.", false);
+        }
+        String response = "Room number for `" + name + "` must be between `1` and `" +  rooms.size() + "`.";
+        return new Response<>(null, response, false);
     }
 
-    public ResponseEntity<String> update(Room room, Long guildId, String name, int num) {
+    public Response<List<Room>> readAll(Long guildId) {
+        Response<Server> server = serverService.read(guildId);
+        if (!server.success) {
+            return new Response<>(null, server.response, false);
+        }
+        return new Response<>(repo.findByServerDiscordId(guildId), "List of rooms returned successfully.", false);
+    }
+
+    public Response<Room> update(Room room, Long guildId, String name, int num) {
+        Response<Server> server = serverService.read(guildId);
+        if (!server.success) {
+            return new Response<>(null, server.response, false);
+        }
         List<Room> rooms = repo.findByServerDiscordIdAndName(guildId, name);
         if (rooms.size() >= num) {
             room.setId(rooms.get(num-1).getId());
             return save(room, guildId);
         }
-        return new ResponseEntity<>("The room could not be found", HttpStatus.BAD_REQUEST);
+        return new Response<>(null,"Room `\" + name + \"` could not be found.", false);
     }
 
-    public ResponseEntity<String> delete(Long guildId, String name, int num) {
+    public Response<Room> delete(Long guildId, String name, int num) {
+        Response<Server> server = serverService.read(guildId);
+        if (!server.success) {
+            return new Response<>(null, server.response, false);
+        }
         List<Room> rooms = repo.findByServerDiscordIdAndName(guildId, name);
         if (rooms.size() >= num) {
             repo.delete(rooms.get(num-1));
-            return new ResponseEntity<>("The room was deleted successfully", HttpStatus.OK);
+            return new Response<>(null, "Room deleted successfully.", true);
         }
-        return new ResponseEntity<>("The room could not be found", HttpStatus.BAD_REQUEST);
+        return new Response<>(null, "Room `\" + name + \"` could not be found", false);
     }
 
 }
